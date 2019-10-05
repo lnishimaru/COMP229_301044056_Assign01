@@ -9,15 +9,12 @@ namespace COMP229_301044056_Assign01.Controllers
 {
     public class HomeController : Controller
     {
-        public ViewResult Index()
+        private IRecipeRepository repository;
+        public HomeController(IRecipeRepository repo)
         {
-
-            Recipe[] myRecipe = 
-                {new Recipe {ID = 502, Name = "Panna Cotta", Cuisine = "Italian", Category = "Desserts" },
-                 new Recipe {ID = 402, Name = "Beef Taco", Cuisine = "Mexican", Category = "Entrees" },
-                 new Recipe {ID = 102, Name = "Autumn Soup", Cuisine = "American", Category = "Appetizers"}};
-            return View(myRecipe);
+            repository = repo;
         }
+        public ViewResult Index() => View(repository.Recipes);
         public ViewResult DataPage()
         {
             return View();

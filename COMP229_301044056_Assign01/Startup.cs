@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using COMP229_301044056_Assign01.Models;
 
 namespace COMP229_301044056_Assign01
 {
@@ -15,6 +16,7 @@ namespace COMP229_301044056_Assign01
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IRecipeRepository, RecipeRepository>();
             services.AddMvc();
         }
 
@@ -26,7 +28,11 @@ namespace COMP229_301044056_Assign01
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
